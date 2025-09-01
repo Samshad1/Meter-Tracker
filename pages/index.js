@@ -529,8 +529,6 @@ const MeterTracker = () => {
                     
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       <div>
-                        <div className="font-medium text-blue-600">You Used:</div>
-                        <div>{reading.adjustedMine.toFixed(2)} units</div>
                         <div className="text-xs text-gray-500">
                           Cost: ₦{(reading.adjustedMine * newRate).toLocaleString()}
                         </div>
@@ -578,4 +576,71 @@ const MeterTracker = () => {
         </div>
         
         {daysRemainingEstimate() && neighborAvailableUnits > 0 && (
-          <div className="mt-4 p-3 bg-blue-100
+          <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded">
+            <strong>Estimate:</strong> At current usage rate, neighbor's prepaid units will last approximately {daysRemainingEstimate()} more days.
+          </div>
+        )}
+        
+        {neighborAvailableUnits <= 0 && (
+          <div className="mt-4 p-3 bg-red-100 border border-red-300 rounded">
+            <strong>Notice:</strong> Neighbor's prepaid units are exhausted. She must now purchase electricity at the current rate of ₦{newRate}/unit.
+          </div>
+        )}
+      </div>
+      
+      <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
+        <h2 className="text-xl font-semibold mb-4">How to Use This Tracker</h2>
+        <div className="space-y-3 text-sm">
+          <div className="flex items-start gap-2">
+            <span className="text-blue-600 font-bold">1.</span>
+            <span><strong>When you buy electricity:</strong> Add your purchase amount. The system calculates units automatically.</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-blue-600 font-bold">2.</span>
+            <span><strong>At month-end:</strong> Read both meters, enter the values and month name, then click "Process Month".</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-blue-600 font-bold">3.</span>
+            <span><strong>Automatic deduction:</strong> The system automatically deducts your neighbor's usage from her remaining prepaid units.</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-blue-600 font-bold">4.</span>
+            <span><strong>No payments between you:</strong> Your neighbor pays nothing until her prepaid units run out completely.</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-blue-600 font-bold">5.</span>
+            <span><strong>After exhaustion:</strong> Once her units are finished, she'll need to start buying at ₦{newRate}/unit like you.</span>
+          </div>
+        </div>
+        
+        <div className="flex gap-3 mt-6">
+          <button
+            onClick={resetTracker}
+            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 flex items-center gap-2"
+          >
+            <RotateCcw size={16} />
+            Reset All Data
+          </button>
+          
+          <button
+            onClick={exportToText}
+            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 flex items-center gap-2"
+          >
+            📄 Export Report
+          </button>
+          
+          <button
+            onClick={exportData}
+            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 flex items-center gap-2"
+          >
+            💾 Save Data
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MeterTracker; className="font-medium text-blue-600">You Used:</div>
+                        <div>{reading.adjustedMine.toFixed(2)} units</div>
+                        <div 
